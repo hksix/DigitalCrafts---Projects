@@ -1,0 +1,1 @@
+# this is the readme to the python week1 repo
