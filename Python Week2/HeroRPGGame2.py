@@ -49,13 +49,37 @@ class Hero(Character):
     def attack(self, enemy):
         super_hit = random.randint(0,100) < 20
         if super_hit:
-            enemy.receive_damage(self.power *2)
             print "super HIT!"
+            enemy.receive_damage(self.power *2)
+        super(Hero, self).attack(enemy)
+
 
 class Medic(Character):
     def __init__(self):
         self.name = 'medic'
-      
+        self.health = 7
+        self.power = 2
+
+    def receive_damage(self, points):
+        recupe_health =random.randint(0,100) < 80
+        if recupe_health:
+            self.health += 2
+            print "Medic has recupd Health!"
+        super(Medic, self).receive_damage(points)
+
+class Shadow(Character):
+    def __init__(self):
+        self.name = 'shadow'
+        self.health = 1
+        self.power = 1
+
+    def receive_damage(self, points):
+        shadow_block = random.randint(0, 100) < 90
+        if not shadow_block:
+            super(Shadow, self).receive_damage(points)
+        else:
+            self.health = points
+            print "SHADOW BLOCK "    
 
 class Goblin(Character):
     def __init__(self):
@@ -86,7 +110,7 @@ class Battle(object):
         while hero.alive() and enemy.alive():
             hero.print_status()
             enemy.print_status()
-            time.sleep(1.5)
+            time.sleep(1)
             print "-----------------------"
             print "What do you want to do?"
             print "1. fight %s" % enemy.name
@@ -119,6 +143,7 @@ class Tonic(object):
         character.health += 2
         print "%s's health increased to %d." % (character.name, character.health)
 
+
 class Sword(object):
     cost = 10
     name = 'sword'
@@ -126,11 +151,19 @@ class Sword(object):
         hero.power += 2
         print "%s's power increased to %d." % (hero.name, hero.power)
 
+class SuperTonic(object):
+    cost = 5
+    name = 'SUPER tonic'
+    def apply(self, character):
+        character.health = 10
+        print "%s's health increased to %d." % (character.name, character.health)
+
+
 class Store(object):
     # If you define a variable in the scope of a class:
     # This is a class variable and you can access it like
     # Store.items => [Tonic, Sword]
-    items = [Tonic, Sword]
+    items = [Tonic, Sword, SuperTonic]
     def do_shopping(self, hero):
         while True:
             print "====================="
@@ -151,7 +184,7 @@ class Store(object):
                 hero.buy(item)
 
 hero = Hero()
-enemies = [Goblin(), Wizard()]
+enemies = [Shadow(), Medic(), Goblin(), Wizard()]
 battle_engine = Battle()
 shopping_engine = Store()
 
