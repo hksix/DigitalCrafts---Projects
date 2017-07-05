@@ -83,8 +83,8 @@ def main():
     # fly_turtle_fly()
     # draw_a_square()
     # draw_a_square()
-    # draw_h()
-    # draw_a()
+    draw_h()
+    draw_a()
     mainloop()
 
 main ()

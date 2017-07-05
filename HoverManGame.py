@@ -5,8 +5,8 @@ clock = pygame.time.Clock()
 pygame.init()
 
 class Hero_sprite(pygame.sprite.Sprite):
-    MAX_FORWARD_SPEED = 5
-    MAX_REVERSE_SPEED = 5
+    MAX_FORWARD_SPEED = 15
+    MAX_REVERSE_SPEED = 15
     acceleration = 2
     Turn_speed = 5  #rotaion speed
     
